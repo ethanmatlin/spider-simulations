@@ -35,7 +35,7 @@ def fitness_func(newLoc, spider, F, t):
 	#aaa
 	return size(F, spider, t)*((u[newLoc_x][newLoc_y]/v(newLoc_x,newLoc_y))+v(newLoc_x,newLoc_y)) - xi*dist(spiderLocs[spider],(newLoc_x,newLoc_y)) - kappa
 
-def v(loc_x,loc_y, ):
+def v(loc_x,loc_y):
 	counter = 0 
 	for i in range(len(spiderLocs)):
 		if (spiderLocs[i][0]==loc_x & spiderLocs[i][1]==loc_y):
@@ -57,9 +57,17 @@ for t in range(T):
 		#aaa
 		#Gives index number of a flattened matrix
 		#randomize this in case there's a tie!
-	F_calc = np.array(F_calc)
-	i,j = np.unravel_index(np.argmax(F_calc), F_calc.shape)
-	print(i,j)
+		F_calc = np.array(F_calc)
+		i,j = np.unravel_index(np.argmax(F_calc), F_calc.shape)
+		spiderLocs[j] = (i,j)
+	print(spiderLocs)
+	
+	matrix = np.ones((numLocations, numLocations))
+	for k in range(numLocations):
+		for l in range(numLocations):
+			matrix[k, l] = v(k,l)
+	#print(matrix)
+	#print(i,j)
 
 
 #ways to test. what is answer should be
