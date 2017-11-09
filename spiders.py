@@ -34,14 +34,14 @@ def fitness_func(newLoc, spider, F, t):
 	#print(newLoc_y)
 	#print(newLoc_x)
 	#aaa
-	return size(F, spider, t)*((u[newLoc_x][newLoc_y]/v(newLoc_x,newLoc_y))+v(newLoc_x,newLoc_y)) - xi*dist(spiderLocs[spider],(newLoc_x,newLoc_y)) - kappa
+	return size(F, spider, t)*((u[newLoc_x][newLoc_y]/v(newLoc_x,newLoc_y, t))+v(newLoc_x,newLoc_y, t)) - xi*dist(spiderLocs[spider],(newLoc_x,newLoc_y)) - kappa
 
-def v(loc_x,loc_y):
-	counter = 1 
-	for i in range(len(spiderLocs)):
+def v(loc_x,loc_y, t):
+	mass = 1 
+        for i in range(numSpiders):
 		if (spiderLocs[i][0]==loc_x & spiderLocs[i][1]==loc_y):
-			counter = counter + 1
-	return counter
+			mass = mass + F[i][t]
+	return mass
 
 def rargmax(vector):
     """ Argmax that chooses randomly among eligible maximum indices. """
