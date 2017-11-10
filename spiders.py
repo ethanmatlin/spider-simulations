@@ -8,7 +8,7 @@ numSpiders = 5
 numLocations = 5
 xi = 1 
 kappa = 1
-T = 100
+T = 10
 
 # Randomly assign all 5 spiders a position
 spiderLocs = [(random.randint(0,numLocations-1), random.randint(0,numLocations-1)) for i in range(numSpiders)]
@@ -38,7 +38,7 @@ def fitness_func(newLoc, spider, F, t):
 
 def v(loc_x,loc_y, t):
 	mass = 1 
-        for i in range(numSpiders):
+	for i in range(numSpiders):
 		if (spiderLocs[i][0]==loc_x & spiderLocs[i][1]==loc_y):
 			mass = mass + F[i][t]
 	return mass
@@ -57,7 +57,7 @@ for t in range(T):
 		F[j][t] = fitness_func(spiderLocs[j], j, F, t) 
 		# Spiders calculate fitness from other locations
 		F_calc = [[fitness_func((i, k), j, F, t) for i in range(numLocations)] for k in range(numLocations)]
-		#print(F_calc)
+		print(F_calc)
 		#aaa
 		#randomize this in case there's a tie!
 		F_calc = np.array(F_calc)
@@ -67,12 +67,12 @@ for t in range(T):
 		#print(i)
 		#print(j)
 		spiderLocs[j] = (i,j)
-	print(spiderLocs)
+	#print(spiderLocs)
 	
 	matrix = np.ones((numLocations, numLocations))
 	for k in range(numLocations):
 		for l in range(numLocations):
-			matrix[k, l] = v(k,l)
+			matrix[k, l] = v(k,l, t)
 	#print(matrix)
 	#print(i,j)
 
