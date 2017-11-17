@@ -58,13 +58,12 @@ def fitness_func(newLoc, spider, F, t):
 		#print(newLoc_y)
 		#print(newLoc_x)
 		#aaa
-		#print(size(F, spider, t))
-		return size(F, spider, t)/v(newLoc_x,newLoc_y, t)*((u[newLoc_y][newLoc_x])) - xi*dist(spiderLocs[spider],(newLoc_y,newLoc_x)) - kappa
+		return F[spider][t]/(v(newLoc_x,newLoc_y, t, spider)+F[spider][t])*((u[newLoc_x][newLoc_y])) - xi*dist(spiderLocs[spider],(newLoc_x,newLoc_y)) - kappa
 
-def v(loc_x,loc_y, t):
-	mass = 1 
+def v(loc_x,loc_y, t, j):
+	mass = 0
 	for i in range(numSpiders):
-		if (spiderLocs[i][0]==loc_y and spiderLocs[i][1]==loc_y):
+		if (i!=j and spiderLocs[i][0]==loc_x and spiderLocs[i][1]==loc_y):
 			mass = mass + F[i][t]
 	return mass
 
