@@ -9,12 +9,12 @@ plotly.tools.set_credentials_file(username='ethanmatlin', api_key='3eIOZHrSqA7Lo
 
 
 
-numSpiders = 100
+numSpiders = 1000
 # Actually number of locations is numLocations^2 since we're on a 2x2 grid.
-numLocations = 5
+numLocations = 10
 xi = .1 
 kappa = .1
-T = 50
+T = 10
 numMales=numSpiders
 
 def numAtLoc(loc_y,loc_x):
@@ -27,7 +27,7 @@ def numAtLoc(loc_y,loc_x):
 
 # Randomly assign all 5 spiders a position
 spiderLocs = [(random.randint(0,numLocations-1), random.randint(0,numLocations-1)) for i in range(numSpiders)]
-print(spiderLocs)
+#print(spiderLocs)
 maleLocs = [(random.randint(0,numLocations-1), random.randint(0,numLocations-1)) for i in range(numMales)]
 
 #An array of arrays: each of the J spiders needs room for T different fitnesses over their lifetime.
@@ -38,8 +38,7 @@ for k in range(numLocations):
 	for l in range(numLocations):
 		start_matrix[k, l] = numAtLoc(k,l)
 
-print(start_matrix)
-
+#print(start_matrix)
 
 def size(F, j, t):
 	sum = 1
@@ -48,23 +47,24 @@ def size(F, j, t):
 	return sum 
 
 def dist(old_loc, new_loc):
-	return 1
+	return ((old_loc[0]-new_loc[0])**2+(old_loc[1]-new_loc[1])**2)**.5
 
 def fitness_func(newLoc, spider, F, t):
 	if (spiderLocs[spider] == (-99,-99)):
 		return 0
 	else:
-		newLoc_x = newLoc[0] 
-		newLoc_y = newLoc[1]
+		newLoc_y = newLoc[0] 
+		newLoc_x = newLoc[1]
 		#print(newLoc_y)
 		#print(newLoc_x)
 		#aaa
-		return size(F, spider, t)/v(newLoc_x,newLoc_y, t)*((u[newLoc_x][newLoc_y])) - xi*dist(spiderLocs[spider],(newLoc_x,newLoc_y)) - kappa
+		#print(size(F, spider, t))
+		return size(F, spider, t)/v(newLoc_x,newLoc_y, t)*((u[newLoc_y][newLoc_x])) - xi*dist(spiderLocs[spider],(newLoc_y,newLoc_x)) - kappa
 
 def v(loc_x,loc_y, t):
 	mass = 1 
 	for i in range(numSpiders):
-		if (spiderLocs[i][0]==loc_x and spiderLocs[i][1]==loc_y):
+		if (spiderLocs[i][0]==loc_y and spiderLocs[i][1]==loc_y):
 			mass = mass + F[i][t]
 	return mass
 
@@ -80,13 +80,16 @@ allMats = [np.ones((numLocations,numLocations)) for i in range(100)]
 #print(allMats)
 
 for t in range(T):
+	print(t)
 	u = [[np.random.poisson(5) for i in range(numLocations)] for k in range(numLocations)]
 	#u = [[0 for i in range(numLocations)] for k in range(numLocations)]
 	#u[1][1] = 100
 	for j in range(numSpiders):
 		# Spiders eat
 		F[j][t] = fitness_func(spiderLocs[j], j, F, t) 
-		if (F[j][t]<0):
+		#print(F[j][t])
+		if (F[j][t] <= 0.0):
+			#print(j)
 			spiderLocs[j]=(-99,-99)
 		else:
 			# Spiders calculate fitness from other locations
@@ -101,7 +104,8 @@ for t in range(T):
 			#print(i)
 			#print(j)
 			spiderLocs[j] = (i,j)
-	print(F_calc)
+		#print(spiderLocs)
+	#print(F_calc)
 	#print(spiderLocs)
 	
 	matrix = np.ones((numLocations, numLocations))
@@ -113,7 +117,11 @@ for t in range(T):
 	#print(i,j)
 allMats[0]=start_matrix
 print(allMats[0])
+print(allMats[1])
+print(allMats[2])
 print(allMats[49])
+
+
 
 trace = go.Heatmap(z=allMats[0])
 data=[trace]
