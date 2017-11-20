@@ -22,25 +22,36 @@ def sdAtLoc(loc_y, loc_x, t):
 
 #####READING IN OUTPUTS
 sizes = h5py.File("size.h5", 'r')
-sizes = list(sizes["sizeMat"])
+sizes = list(sizes["sizes_panel"])
 
 locationNum = h5py.File("locationNum.h5", 'r')
-locationNum = list(locationNum["allMats"])
+locationNum = list(locationNum["number_at_location_time_series"])
+locationNum = np.array(locationNum)
 
 locations = h5py.File("locations.h5", 'r')
-locations = list(locations["locations"])
+locations = list(locations["locations_panel"])
 
 numLocations = len(locations[1])
 
 
 means = np.ones(50)
-
 for t in range(len(sizes[1])):
+	count = 0
 	sum = 0 
 	for i in range(len(sizes)):
-		sum = sum + sizes[i][t]
-	means[t] = sum/len(sizes)
+		if (sizes[i][t]>0):
+			sum = sum + sizes[i][t]
+			count = count+1
+	means[t] = sum/count
 
+plt.plot(means)
+plt.show()
+
+plt.imshow(locationNum[0], cmap='hot', interpolation='nearest')
+plt.show()
+
+plt.hist(sizes[0])
+plt.show()
 
 # sdMat = np.ones((numLocations,numLocations))
 # #for t in range(len(sizes[1])):
@@ -51,8 +62,7 @@ for t in range(len(sizes[1])):
 # print(sdMat)
 # print(np.mean(sdMat))
 
-plt.plot(means)
-plt.show()
+
 
 mat = np.ones((len(sizes), len(sizes[0])))
 
