@@ -33,7 +33,7 @@ xi = 2
 # Constant energy loss each time step
 kappa = 1
 # Number of days to simulate
-T = 50
+T = 100
 # Poisson arrival rate of foot
 arrival_rate = 5
 # Number of males 
@@ -104,7 +104,7 @@ locations_panel = np.array(locations_panel)
 
 # Initialize F_panel: num_spiders x T matrix in which rows correspond to spiders and columns correspond to time periods. 
 # Entries are the fitness of spider j at time t.
-F_panel = [np.ones(T) for i in range(num_spiders)]
+F_panel = [np.zeros(T) for i in range(num_spiders)]
 F_panel = np.array(F_panel)
 
 
@@ -115,7 +115,7 @@ sizes_panel = np.array(sizes_panel)
 
 # Initialize number_at_location_time_series where each entry corresponds to a time step and represents a spatial disribution of spiders 
 # (in array n_rows x n_cols form)
-number_at_location_time_series = [np.ones((num_locations,num_locations)) for i in range(T)]
+number_at_location_time_series = [np.zeros((num_locations,num_locations)) for i in range(T)]
 number_at_location_time_series = np.array(number_at_location_time_series)
 # Count number at each location for t=0
 for row in range(num_locations):
