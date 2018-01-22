@@ -63,7 +63,7 @@ print("p-value: " + str(pval))
 plt.hist(nullSD)
 plt.axvline(model, color='b', linestyle='dashed', linewidth=2)
 plt.savefig('model_perm_test.png', bbox_inches='tight')
-
+plt.close()
 
 plt.plot(means)
 plt.savefig('size_over_time.png', bbox_inches='tight')
