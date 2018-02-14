@@ -1,0 +1,27 @@
+set locations for all J spiders 
+initialize Fitness to 0 for all J spiders
+initialize size to 1 for all J spiders
+set number at location to 0 for all locations
+then count the number at each location and set that
+
+for t to T {
+	either draw a new arrival rate or not 
+	set the u matrix to a rnadom poisson draw 
+	loop through spiders j to J {
+		if alive {
+			calculate fitness based on where they are/food available
+			set size based on fitness panel
+		if dead {
+			set size, loction, and fitness to negatives/zero
+		}
+		}
+	}
+	rescale size from continuous to discrete
+	loop through spiders j to J {
+		check if dead
+		calculate fitness of all possible locations
+		move to optimal location dependent on how rational/omnicient 
+	}
+	count the number at each location
+}
+
