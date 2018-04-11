@@ -25,3 +25,7 @@ for t to T {
 	count the number at each location
 }
 
+
+1. average over multiple time steps teh fitness functin so not moving so much
+2. move one spider at a time instead of all at once
+3. give different patches different arrival rates 
