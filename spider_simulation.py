@@ -184,8 +184,8 @@ def simulate(meta_parameters):
 	for t in range(T):
 		# Generate food
 		if (time_variant_arrival_rate):
-			#arrival_rate = arrival_rate + np.random.normal
-			arrival_rate = np.random.uniform(12,28)
+			arrival_rate = .1*t + 1 
+			#arrival_rate = np.random.uniform(12,28)
 		if (space_variant_arrival_rate==False):
 			u = [[np.random.poisson(arrival_rate) for i in range(num_locations)] for k in range(num_locations)]
 		else: 
@@ -420,10 +420,10 @@ def graph(meta_parameters):
 	+ "omni=" + boolString(meta_parameters['omnicient']) + "rand=" + str(random_str) 
 	+ "smoo=" + boolString(meta_parameters['smooth']) + "once=" + boolString(meta_parameters['all_at_once']) + "sc=" + boolString(meta_parameters['start_clusters']))
 
-	plt.hist(nullSD)
-	plt.axvline(model, color='b', linestyle='dashed', linewidth=2)
-	plt.savefig('model_perm_test' + name_params + '.png', bbox_inches='tight')
-	plt.close()
+	# plt.hist(nullSD)
+	# plt.axvline(model, color='b', linestyle='dashed', linewidth=2)
+	# plt.savefig('model_perm_test' + name_params + '.png', bbox_inches='tight')
+	# plt.close()
 
 	plt.plot(mean_fitness)
 	plt.xlabel("Time")
